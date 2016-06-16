@@ -1,0 +1,24 @@
+{
+  "name": "recycled-map",
+  "version": "1.0.0",
+  "description": "A map that displays gps coordinates of the Recycled Mississipi boat.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "5.8.x",
+    "npm": "3.7.x"
+  },
+
+  "author": "Hubbub",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "jade": "^1.11.0",
+    "mongoose": "^4.5.0",
+    "morgan": "^1.7.0",
+    "stylus": "^0.54.5"
+  }
+}
