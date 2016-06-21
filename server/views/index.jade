@@ -1,15 +1,28 @@
 extends ../includes/layout
 
 block main-content
-    .navbar.navbar-inverse.navbar-fixed-top
+    .navbar.navbar-default.navbar-fixed-top
         .container
             .navbar-header
+                button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-ex-collapse')
+                    span.sr-only Toggle navigation
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
                 h1
-                    a.navbar-brand(href="/") Recycled Mississipi
-            .navbar-collapse.collapse
-                ul.nav.navbar-nav
+                    .col-md-4
+                        a.navbar-brand(href="/")
+                            img.img-responsive(src="http://static1.squarespace.com/static/556c27cee4b099a4afb1a79d/t/56ed755822482eaae2c00c6c/1466057497620/?format=1500w")
+            .navbar-ex-collapse.collapse.navbar-collapse
+                ul.nav.navbar-nav.navbar-right
+                    li.active
+                        a(href='#') Recycled Mississippi
                     li
-                        a(href="/") Home
+                        a(href='#') Past Expeditions
+                    li
+                        a(href='#') About
+                    li
+                        a(href='#') Connect
     section.content
         div(ng-view)
 
@@ -17,6 +30,8 @@ block main-content
         p &copy; 2016 Recycled Missisipi
     
 
-    
-                    
-    
+
+
+
+
+
