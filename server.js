@@ -13,5 +13,9 @@ require('./server/config/mongoose')(config);
 
 require('./server/config/routes')(app);
 
+require('./server/fetch/download')(app, config);
+
+
+
 app.listen(config.port);
 console.log('Listening on ' + config.port + '...');

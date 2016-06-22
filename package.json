@@ -10,15 +10,18 @@
     "node": "5.8.x",
     "npm": "3.7.x"
   },
-
   "author": "Hubbub",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
+    "geojson": "^0.3.0",
     "jade": "^1.11.0",
+    "jsonfile": "^2.3.1",
     "mongoose": "^4.5.0",
     "morgan": "^1.7.0",
+    "promise": "^7.1.1",
+    "request": "^2.72.0",
     "stylus": "^0.54.5"
   }
 }
