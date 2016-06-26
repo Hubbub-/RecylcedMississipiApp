@@ -61,17 +61,47 @@ function readJSON(filename, callback){
 
 function loadExisting(config){
     //--- load the existing geojson file ---
-    readJSON('./server/fetch/rawmessage.json', function(err, obj){
-        exMessageArray = obj.response.feedMessageResponse.messages.message;
-        console.log("number of existing messages: " + exMessageArray.length);
-        //--- make a list of existing times
-        for(var i=0; i<exMessageArray.length; i++){
-            exTimeArray.push(exMessageArray[i].dateTime);
-        }
-        console.log("existing Times:");
-        console.log(exTimeArray);
-        compare(config);  //------------------------ call next function
-    })
+    var Schema = mongoose.Schema;
+    var JsonSchema = new Schema({
+        name: String,
+        type: Schema.Types.Mixed
+    });
+    
+    
+    var db = mongoose.connection;
+    //var geoMongo = mongoose.model('geoMongo', JsonSchema, 'geo');
+    var geoMongo = db.collection('geo');
+    // var prom = readFile().then(JSON.parse);
+    geoMongo.find().toArray(function (err, result) {
+        if (err) {
+        console.log(err);
+      } else if (result.length) {
+        console.log('Found:', result);
+      } else {
+        console.log('No document(s) found with defined "find" criteria!');
+      }
+      //Close connection
+      db.close();
+      var exString = JSON.stringify(result);
+      console.log("\nparsed existing:");
+      console.log(exString)
+      console.log("\n");
+      console.log(result[0].features);
+      exMessageArray = result[0].features;
+      
+    });
+    
+    // readJSON('./server/fetch/rawmessage.json', function(err, obj){
+    //     exMessageArray = obj.response.feedMessageResponse.messages.message;
+    //     console.log("number of existing messages: " + exMessageArray.length);
+    //     //--- make a list of existing times
+    //     for(var i=0; i<exMessageArray.length; i++){
+    //         exTimeArray.push(exMessageArray[i].dateTime);
+    //     }
+    //     console.log("existing Times:");
+    //     console.log(exTimeArray);
+    //     compare(config);  //------------------------ call next function
+    // })
 }
 
 
@@ -134,7 +164,7 @@ function geoWrite(config, geoData) {
     // mongoose.connect(config.db);
     var db = mongoose.connection;
     var collection = db.collection('geo');
-    collection.insert(geoData, function(err, result){
+    collection.update(geoData, function(err, result){
         if (err){
             console.log(err);
         }
