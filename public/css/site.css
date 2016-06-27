@@ -8,9 +8,9 @@ body {
   padding: 15px;
 }
 .navbar-brand {
-  height: auto;
-  padding: 0;
-  min-height: inherit;
+  padding: -15px;
+  height: 100%;
+  width: 250px;
 }
 footer {
   margin-top: 15px;
