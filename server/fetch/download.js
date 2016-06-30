@@ -7,6 +7,7 @@ var mongoose = require('mongoose');
 
 
 var readFile = promise.denodeify(require('fs').readFile);
+var writeFile = promise.denodeify(require('fs').writeFile);
 
 var newMessageArray = [];
 var newTimeArray = [];
@@ -21,14 +22,14 @@ var combinedData = [];
 
 module.exports = function(app, config) {
     
-    loadSpot(config);
+    loadSpot(app, config);
 
 }
 
-function loadSpot(config){
+function loadSpot(app, config){
     //--- load the spot json feed ---
-    // var url = "https://api.findmespot.com/spot-main-web/consumer/rest-api/2.0/public/feed/0N6dXjTo7eRCUfsNlXrLNnfDFuDVNVN1c/message.json"
-    var url = 'https://raw.githubusercontent.com/Hubbub-/mapboxupload/master/message.json'
+    var url = "https://api.findmespot.com/spot-main-web/consumer/rest-api/2.0/public/feed/0N6dXjTo7eRCUfsNlXrLNnfDFuDVNVN1c/message.json"
+    //var url = 'https://raw.githubusercontent.com/Hubbub-/mapboxupload/master/message.json'
     request({url: url, json: true}, function(error,response,body){
         if(!error && response.statusCode == 200){
             newMessageArray = body.response.feedMessageResponse.messages.message;
@@ -46,7 +47,7 @@ function loadSpot(config){
             console.log(newLatArray);
             console.log("newLongs");
             console.log(newLongArray);
-            loadExisting(config); //------------------------ call next function
+            loadExisting(app, config); //------------------------ call next function
         }
     })
     
@@ -59,49 +60,62 @@ function readJSON(filename, callback){
     return readFile(filename, 'utf8').then(JSON.parse).nodeify(callback);
 }
 
-function loadExisting(config){
+function loadExisting(app, config){
     //--- load the existing geojson file ---
-    var Schema = mongoose.Schema;
-    var JsonSchema = new Schema({
-        name: String,
-        type: Schema.Types.Mixed
-    });
+    // var Schema = mongoose.Schema;
+    // var JsonSchema = new Schema({
+    //     name: String,
+    //     type: Schema.Types.Mixed
+    // });
     
     
-    var db = mongoose.connection;
-    //var geoMongo = mongoose.model('geoMongo', JsonSchema, 'geo');
-    var geoMongo = db.collection('geo');
-    // var prom = readFile().then(JSON.parse);
-    geoMongo.find().toArray(function (err, result) {
-        if (err) {
-        console.log(err);
-      } else if (result.length) {
-        console.log('Found:', result);
-      } else {
-        console.log('No document(s) found with defined "find" criteria!');
-      }
-      //Close connection
-      db.close();
-      var exString = JSON.stringify(result);
-      console.log("\nparsed existing:");
-      console.log(exString)
-      console.log("\n");
-      console.log(result[0].features);
-      exMessageArray = result[0].features;
+    // var db = mongoose.connection;
+    // //var geoMongo = mongoose.model('geoMongo', JsonSchema, 'geo');
+    // var geoMongo = db.collection('geo');
+    // // var prom = readFile().then(JSON.parse);
+    // var ObjectID = mongoose.ObjectID;
+    // geoMongo.findOne( { _id: new ObjectID("5773497a893c69e9b7a86dad") } ).toArray(function (err, result) {
+    //     if (err) {
+    //     console.log(err);
+    //   } else if (result.length) {
+    //     console.log('Found:', result);
+    //   } else {
+    //     console.log('No document(s) found with defined "find" criteria!');
+    //   }
+    //   //Close connection
+    //   db.close();
       
-    });
     
-    // readJSON('./server/fetch/rawmessage.json', function(err, obj){
-    //     exMessageArray = obj.response.feedMessageResponse.messages.message;
-    //     console.log("number of existing messages: " + exMessageArray.length);
-    //     //--- make a list of existing times
-    //     for(var i=0; i<exMessageArray.length; i++){
-    //         exTimeArray.push(exMessageArray[i].dateTime);
-    //     }
-    //     console.log("existing Times:");
-    //     console.log(exTimeArray);
-    //     compare(config);  //------------------------ call next function
-    // })
+      
+      
+    //   app.get('/partials/:partialPath', function(req, res){
+    //       res.render('partials/' + req.params.partialPath);
+    //   })
+    //   app.get('*', function(req, res){
+    //       res.render('rmMainCtrl', {
+    //           mongoResult: result
+    //       });
+    //   })
+    //   var exString = JSON.stringify(result);
+
+      
+    //   console.log("\nparsed existing:");
+    //   console.log(exString)
+    //   console.log("\n");
+    //   console.log(result[0].features);
+    //   exMessageArray = result[0].features;
+      
+    readJSON('./public/geo.geojson', function(err, obj){
+        exMessageArray = obj.features;
+        console.log("number of existing messages: " + exMessageArray.length);
+        //--- make a list of existing times
+        for(var i=0; i<exMessageArray.length; i++){
+            exTimeArray.push(exMessageArray[i].properties.name);
+        }
+        console.log("existing Times:");
+        console.log(exTimeArray);
+        compare(config);  //------------------------ call next function
+    })
 }
 
 
@@ -128,13 +142,13 @@ function compare(config) {
 //--- put the time, latitude and longitude together as "features" ---
 function combine(config){
     
-    // for(var i=0; i<exTimeArray.length; i++){
-    //     var iLat = exMessageArray[i].latitude;
-    //     var iLong = exMessageArray[i].longitude;
-    //     var str = '{ "name": "' + exTimeArray[i] + '", "lat": "' + iLat + '", "long": "' + iLong + '" }';
-    //     var pj = JSON.parse(str);
-    //     combinedData.push(pj);
-    // }
+    for(var i=0; i<exTimeArray.length; i++){
+        var iLat = exMessageArray[i].geometry.coordinates[1];
+        var iLong = exMessageArray[i].geometry.coordinates[0];
+        var str = '{ "name": "' + exTimeArray[i] + '", "lat": "' + iLat + '", "long": "' + iLong + '" }';
+        var pj = JSON.parse(str);
+        combinedData.push(pj);
+    }
     
     for(var i=0; i<newTimeArray.length; i++){
         var iLat = newMessageArray[i].latitude;
@@ -153,6 +167,7 @@ function combine(config){
 //--- turn the list of features into a collection ---
 function geoParse(config){
     var geoData = geoJSON.parse(combinedData, {Point: ['lat', 'long']});
+    console.log("geoParse");
     console.log(geoData);
 
     geoWrite(config, geoData); //----------------------- next function
@@ -162,16 +177,24 @@ function geoParse(config){
 //--- write a geojson file from the collection ---
 function geoWrite(config, geoData) {
     // mongoose.connect(config.db);
-    var db = mongoose.connection;
-    var collection = db.collection('geo');
-    collection.update(geoData, function(err, result){
+    // var db = mongoose.connection;
+    // var collection = db.collection('geo');
+    // console.log("about to update")
+    // console.log(geoData);
+    // collection.update({ _id: ObjectId("5773497a893c69e9b7a86dad") }, { $push: { $each: geoData}}, function(err, result){
+    //     if (err){
+    //         console.log(err);
+    //     }
+    //     else{
+    //         console.log('inserted %d into the "geo" collection. The documents inserted with "_id" are: ', result.length, result);
+    //     }
+    //     db.close();
+    // });
+    
+    jsonfile.writeFile("./public/geo.geojson", geoData, {spaces: 2}, function(err){
         if (err){
-            console.log(err);
+            console.error(err)
         }
-        else{
-            console.log('inserted %d into the "geo" collection. The documents inserted with "_id" are: ', result.length, result);
-        }
-        db.close();
     });
 }
 

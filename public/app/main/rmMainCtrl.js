@@ -1,9 +1,14 @@
 angular.module('app').controller('rmMainCtrl', function($scope, $http, leafletData) {
 
     function init() {
-
-        $http.get("/test.geojson").success(function(data, status) {
+        var latinit;
+        var longinit;
+        $http.get("/geo.geojson").success(function(data, status) {
+            // latinit = data.features[i].geometry.coordinates[1];
+            // longinit = data.features[i].geometry.coordinates[0];
             angular.extend($scope, {
+                
+                
                 geojson: {
                     data: data,
                     style: {
@@ -16,13 +21,14 @@ angular.module('app').controller('rmMainCtrl', function($scope, $http, leafletDa
                     }
                 }
             })
+            
         });
 
         //place the map center to be first vlog position
-        $scope.center = {
-            lat: 41.22503,
-            lng: -73.7948,
-            zoom: 16
+        $scope.center = {     
+            lat: 42.49517,
+            lng: -90.65964,
+            zoom: 14
         };
         //define mapbox as the map
         $scope.layers = {
