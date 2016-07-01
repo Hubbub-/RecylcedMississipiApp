@@ -26,6 +26,10 @@ module.exports = function(app, config) {
 
 }
 
+function sortByTIME(a,b) {
+    return (a.name > b.name) ? -1 : ((a.name < b.name) ? 1 : 0);
+}
+
 function loadSpot(app, config){
     //--- load the spot json feed ---
     var url = "https://api.findmespot.com/spot-main-web/consumer/rest-api/2.0/public/feed/0N6dXjTo7eRCUfsNlXrLNnfDFuDVNVN1c/message.json"
@@ -41,12 +45,12 @@ function loadSpot(app, config){
                 newLatArray.push(newMessageArray[i].latitude);
                 newLongArray.push(newMessageArray[i].longitude);
             }
-            console.log("NewTimes");
-            console.log(newTimeArray);
-            console.log("newLats");
-            console.log(newLatArray);
-            console.log("newLongs");
-            console.log(newLongArray);
+            // console.log("NewTimes");
+            // console.log(newTimeArray);
+            // console.log("newLats");
+            // console.log(newLatArray);
+            // console.log("newLongs");
+            // console.log(newLongArray);
             loadExisting(app, config); //------------------------ call next function
         }
     })
@@ -112,8 +116,8 @@ function loadExisting(app, config){
         for(var i=0; i<exMessageArray.length; i++){
             exTimeArray.push(exMessageArray[i].properties.name);
         }
-        console.log("existing Times:");
-        console.log(exTimeArray);
+        // console.log("existing Times:");
+        // console.log(exTimeArray);
         compare(config);  //------------------------ call next function
     })
 }
@@ -125,16 +129,16 @@ function compare(config) {
     for(var i=newTimeArray.length-1; i >= 0; i--){
         for(var j=exTimeArray.length-1; j >= 0; j--){
             if(newTimeArray[i] == exTimeArray[j]){
-                console.log("removing:");
-                console.log(newTimeArray[i]);
+                // console.log("removing:");
+                // console.log(newTimeArray[i]);
                 newTimeArray.splice(i,1);
                 newLatArray.splice(i,1);
                 newLongArray.splice(i,1);
             }
         }
     }
-    console.log("resulting new times");
-    console.log(newTimeArray);
+    console.log("number of resulting new times: " + newTimeArray.length);
+    // console.log(newTimeArray);
     combine(config);   //------------------------ call next function
 }
 
@@ -158,8 +162,8 @@ function combine(config){
         combinedData.push(pj);
     }
     
-    console.log(combinedData);
-    
+    // console.log(combinedData);
+    combinedData.sort(sortByTIME);
     geoParse(config); //---------------------------- next function
 }
 
@@ -167,9 +171,9 @@ function combine(config){
 //--- turn the list of features into a collection ---
 function geoParse(config){
     var geoData = geoJSON.parse(combinedData, {Point: ['lat', 'long']});
-    console.log("geoParse");
-    console.log(geoData);
-
+    // console.log("geoParse");
+    // console.log(geoData);
+    // geoData.sort(sortByNAME);
     geoWrite(config, geoData); //----------------------- next function
 }
 
