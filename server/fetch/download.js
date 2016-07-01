@@ -23,6 +23,7 @@ var combinedData = [];
 module.exports = function(app, config) {
     
     loadSpot(app, config);
+    
 
 }
 
@@ -40,6 +41,9 @@ function loadSpot(app, config){
             console.log("number of spot messages: " + newMessageArray.length);
             
             //--- make lists for time, lat and long from the spot GPS ---
+            newTimeArray = [];
+            newLatArray = [];
+            newLongArray = [];
             for(var i=0; i<newMessageArray.length; i++){
                 newTimeArray.push(newMessageArray[i].dateTime);
                 newLatArray.push(newMessageArray[i].latitude);
@@ -54,6 +58,7 @@ function loadSpot(app, config){
             loadExisting(app, config); //------------------------ call next function
         }
     })
+    setTimeout(loadSpot, 300000, app, config);
     
 }
 
@@ -113,6 +118,7 @@ function loadExisting(app, config){
         exMessageArray = obj.features;
         console.log("number of existing messages: " + exMessageArray.length);
         //--- make a list of existing times
+        exTimeArray = [];
         for(var i=0; i<exMessageArray.length; i++){
             exTimeArray.push(exMessageArray[i].properties.name);
         }
@@ -137,7 +143,7 @@ function compare(config) {
             }
         }
     }
-    console.log("number of resulting new times: " + newTimeArray.length);
+    console.log("number of resulting new times: " + newTimeArray.length + "\n");
     // console.log(newTimeArray);
     combine(config);   //------------------------ call next function
 }
@@ -145,7 +151,7 @@ function compare(config) {
 
 //--- put the time, latitude and longitude together as "features" ---
 function combine(config){
-    
+    combinedData = [];
     for(var i=0; i<exTimeArray.length; i++){
         var iLat = exMessageArray[i].geometry.coordinates[1];
         var iLong = exMessageArray[i].geometry.coordinates[0];
@@ -200,5 +206,6 @@ function geoWrite(config, geoData) {
             console.error(err)
         }
     });
+    
 }
 
