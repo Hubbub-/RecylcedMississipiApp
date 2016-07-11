@@ -58,7 +58,7 @@ function loadSpot(app, config){
             loadExisting(app, config); //------------------------ call next function
         }
     })
-    setTimeout(loadSpot, 300000, app, config);
+    setTimeout(loadSpot, 360000, app, config);
     
 }
 

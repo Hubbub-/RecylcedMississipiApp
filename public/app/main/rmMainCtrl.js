@@ -1,4 +1,4 @@
-angular.module('app').controller('rmMainCtrl', function($scope, $http, leafletData) {
+angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData', function($scope, $http, leafletData) {
 
     function init() {
         var latinit;
@@ -10,15 +10,6 @@ angular.module('app').controller('rmMainCtrl', function($scope, $http, leafletDa
             angular.extend($scope, {
                 geojson: {
                     data: data,
-                    style: {
-                        fillColor: "pink",
-                        weight: 2,
-                        opacity: 0.5,
-                        color: 'white',
-                        dashArray: '3',
-                        fillOpacity: 0.7,
-                    },
-                    
                     
                     onEachFeature: function (feature, layer) {
                         if(feature.properties.name != ''){
@@ -68,24 +59,16 @@ angular.module('app').controller('rmMainCtrl', function($scope, $http, leafletDa
         $scope.center = {     
             lat: 39.71105,
             lng: -91.35287,
-            zoom: 9
+            zoom: 9,
         };
         
-        $scope.centerJSON = function() {
-            leafletData.getMap().then(function(map) {
-                var latlngs = [];
-                for (var i in $scope.geojson.data.features) {
-                    var coord = $scope.geojson.data.features[i].geometry.coordinates[0];
-                    for (var j in coord) {
-                        var points = coord[j];
-                        for (var k in points) {
-                            latlngs.push(L.GeoJSON.coordsToLatLng(points[k]));
-                        }
-                    }
-                }
-                map.fitBounds(latlngs);
-            });
-        };
+        $scope.defaults = {
+            scrollWheelZoom: false
+        }
+        
+
+        
+        
 
         
         //define mapbox as the map
@@ -106,4 +89,23 @@ angular.module('app').controller('rmMainCtrl', function($scope, $http, leafletDa
     }
 
     init();
-});
+    
+    
+    $scope.centerJSON = function() {
+        leafletData.getMap().then(function(map) {
+            // var latlngs = [];
+            // for (var i in $scope.geojson.data.features) {
+            //     var coord = $scope.geojson.data.features[i].geometry.coordinates[0];
+            //     for (var j in coord) {
+            //         var points = coord[j];
+            //         for (var k in points) {
+            //             latlngs.push(L.GeoJSON.coordsToLatLng(points[k]));
+            //         }
+            //     }
+            // }
+        //   "-90.76255",
+        //   "42.64936"
+            map.fitBounds([[46.1,-90.76], [29.6,-88]]);
+        });
+    };
+}]);
