@@ -40,9 +40,9 @@ angular.module('app').controller('rmMainCtrl', function($scope, $http, leafletDa
         
         //place the map center to be first vlog position
         $scope.center = {     
-            lat: 42.07165,
-            lng: -90.17184,
-            zoom: 10
+            lat: 39.71105,
+            lng: -91.35287,
+            zoom: 9
         };
         
         $scope.centerJSON = function() {
