@@ -28,7 +28,7 @@ module.exports = function(app, config) {
 }
 
 function sortByTIME(a,b) {
-    return (a.name > b.name) ? -1 : ((a.name < b.name) ? 1 : 0);
+    return (a.time > b.time) ? -1 : ((a.time < b.time) ? 1 : 0);
 }
 
 function loadSpot(app, config){
@@ -70,49 +70,6 @@ function readJSON(filename, callback){
 }
 
 function loadExisting(app, config){
-    //--- load the existing geojson file ---
-    // var Schema = mongoose.Schema;
-    // var JsonSchema = new Schema({
-    //     name: String,
-    //     type: Schema.Types.Mixed
-    // });
-    
-    
-    // var db = mongoose.connection;
-    // //var geoMongo = mongoose.model('geoMongo', JsonSchema, 'geo');
-    // var geoMongo = db.collection('geo');
-    // // var prom = readFile().then(JSON.parse);
-    // var ObjectID = mongoose.ObjectID;
-    // geoMongo.findOne( { _id: new ObjectID("5773497a893c69e9b7a86dad") } ).toArray(function (err, result) {
-    //     if (err) {
-    //     console.log(err);
-    //   } else if (result.length) {
-    //     console.log('Found:', result);
-    //   } else {
-    //     console.log('No document(s) found with defined "find" criteria!');
-    //   }
-    //   //Close connection
-    //   db.close();
-      
-    
-      
-      
-    //   app.get('/partials/:partialPath', function(req, res){
-    //       res.render('partials/' + req.params.partialPath);
-    //   })
-    //   app.get('*', function(req, res){
-    //       res.render('rmMainCtrl', {
-    //           mongoResult: result
-    //       });
-    //   })
-    //   var exString = JSON.stringify(result);
-
-      
-    //   console.log("\nparsed existing:");
-    //   console.log(exString)
-    //   console.log("\n");
-    //   console.log(result[0].features);
-    //   exMessageArray = result[0].features;
       
     readJSON('./public/geo.geojson', function(err, obj){
         exMessageArray = obj.features;
@@ -120,7 +77,7 @@ function loadExisting(app, config){
         //--- make a list of existing times
         exTimeArray = [];
         for(var i=0; i<exMessageArray.length; i++){
-            exTimeArray.push(exMessageArray[i].properties.name);
+            exTimeArray.push(exMessageArray[i].properties.localTime);
         }
         // console.log("existing Times:");
         // console.log(exTimeArray);
@@ -155,7 +112,10 @@ function combine(config){
     for(var i=0; i<exTimeArray.length; i++){
         var iLat = exMessageArray[i].geometry.coordinates[1];
         var iLong = exMessageArray[i].geometry.coordinates[0];
-        var str = '{ "name": "' + exTimeArray[i] + '", "lat": "' + iLat + '", "long": "' + iLong + '" }';
+        var d = new Date(exTimeArray[i]);
+        var uTime = d.getTime()/1000;
+        var iName = exMessageArray[i].properties.name;
+        var str = '{"current": "false", "time": "' + uTime + '", "name": "' + iName + '", "localTime": "' + exTimeArray[i] + '", "lat": "' + iLat + '", "long": "' + iLong + '" }';
         var pj = JSON.parse(str);
         combinedData.push(pj);
     }
@@ -163,13 +123,24 @@ function combine(config){
     for(var i=0; i<newTimeArray.length; i++){
         var iLat = newMessageArray[i].latitude;
         var iLong = newMessageArray[i].longitude;
-        var str = '{ "name": "' + newTimeArray[i] + '", "lat": "' + iLat + '", "long": "' + iLong + '" }';
+        var date = new Date(newTimeArray[i]);
+        var uTime = date.getTime()/1000;
+        var iName = ''
+        var str = '{"current": "false", "time": "' + uTime + '", "name": "' + iName + '", "localTime": "' + newTimeArray[i] + '", "lat": "' + iLat + '", "long": "' + iLong + '" }';
         var pj = JSON.parse(str);
         combinedData.push(pj);
     }
     
     // console.log(combinedData);
     combinedData.sort(sortByTIME);
+    for(var i=0; i<combinedData.length; i++){
+        if(i === 0){
+            combinedData[i].current = "true"
+        }
+        else{
+            combinedData[i].current = "false"
+        }
+    }
     geoParse(config); //---------------------------- next function
 }
 

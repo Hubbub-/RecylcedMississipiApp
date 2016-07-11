@@ -21,15 +21,41 @@ angular.module('app').controller('rmMainCtrl', function($scope, $http, leafletDa
                     
                     
                     onEachFeature: function (feature, layer) {
-                        layer.bindPopup(feature.properties.name);
-                        layer.setIcon(L.icon({
-                            iconUrl: 'sailboat.png',
-                            iconSize: [100],
-                            shadowUrl: 'sailboat_shadow.png',
-                            shadowSize: [100],
-                        }))
-                    },
-                    
+                        if(feature.properties.name != ''){
+                            layer.bindPopup(feature.properties.name);
+                        }
+                        if(feature.properties.current === "true"){
+                            layer.setIcon(L.icon({
+                                iconUrl: 'sailboat.png',
+                                iconSize: [200],
+                                iconAnchor:[80,112],
+                                shadowUrl: 'sailboat_shadow.png',
+                                shadowSize: [200],
+                                shadowAnchor: [80,112],
+                            }))
+                            
+                        }
+                        else if(feature.properties.name != ''){
+                            layer.setIcon(L.icon({
+                                iconUrl: 'sailboatMediumRed.png',
+                                iconSize: [100],
+                                iconAnchor:[40,56],
+                                shadowUrl: 'sailboat_shadowMedium.png',
+                                shadowSize: [100],
+                                shadowAnchor: [40,56],
+                            }))
+                        }
+                        else{
+                            layer.setIcon(L.icon({
+                                iconUrl: 'sailboatSmall.png',
+                                iconSize: [50],
+                                iconAnchor:[20,28],
+                                shadowUrl: 'sailboat_shadowSmall.png',
+                                shadowSize: [50],
+                                shadowAnchor: [20,28],
+                            }))
+                        }
+                    }
                 }
                 
             })
@@ -38,7 +64,7 @@ angular.module('app').controller('rmMainCtrl', function($scope, $http, leafletDa
         });
         
         
-        //place the map center to be first vlog position
+        // place the map center to be first vlog position
         $scope.center = {     
             lat: 39.71105,
             lng: -91.35287,
@@ -49,7 +75,7 @@ angular.module('app').controller('rmMainCtrl', function($scope, $http, leafletDa
             leafletData.getMap().then(function(map) {
                 var latlngs = [];
                 for (var i in $scope.geojson.data.features) {
-                    var coord = $scope.geojson.data.features[i].geometry.coordinates;
+                    var coord = $scope.geojson.data.features[i].geometry.coordinates[0];
                     for (var j in coord) {
                         var points = coord[j];
                         for (var k in points) {
@@ -76,6 +102,7 @@ angular.module('app').controller('rmMainCtrl', function($scope, $http, leafletDa
                 }
             }
         };
+        setTimeout(init, 300000);
     }
 
     init();
