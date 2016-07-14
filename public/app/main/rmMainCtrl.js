@@ -1,8 +1,6 @@
 angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData', function($scope, $http, leafletData) {
 
-    function init() {
-        var latinit;
-        var longinit;
+    function loadData() {
         $http.get("/geo.geojson").success(function(data, status) {
             // latinit = data.features[i].geometry.coordinates[1];
             // longinit = data.features[i].geometry.coordinates[0];
@@ -17,10 +15,10 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
                         }
                         if(feature.properties.current === "true"){
                             layer.setIcon(L.icon({
-                                iconUrl: 'sailboat.png',
+                                iconUrl: 'images/map/sailboat.png',
                                 iconSize: [200],
                                 iconAnchor:[80,112],
-                                shadowUrl: 'sailboat_shadow.png',
+                                shadowUrl: 'images/map/sailboat_shadow.png',
                                 shadowSize: [200],
                                 shadowAnchor: [80,112],
                             }))
@@ -28,22 +26,20 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
                         }
                         else if(feature.properties.name != ''){
                             layer.setIcon(L.icon({
-                                iconUrl: 'sailboatMediumRed.png',
+                                iconUrl: 'images/map/sailboatMediumRed.png',
                                 iconSize: [100],
                                 iconAnchor:[40,56],
-                                shadowUrl: 'sailboat_shadowMedium.png',
+                                shadowUrl: 'images/map/sailboat_shadowMedium.png',
                                 shadowSize: [100],
                                 shadowAnchor: [40,56],
                             }))
                         }
                         else{
                             layer.setIcon(L.icon({
-                                iconUrl: 'sailboatSmall.png',
-                                iconSize: [50],
-                                iconAnchor:[20,28],
-                                shadowUrl: 'sailboat_shadowSmall.png',
-                                shadowSize: [50],
-                                shadowAnchor: [20,28],
+                                iconUrl: 'images/map/dotSmall.png',
+                                iconSize: [10],
+                                iconAnchor:[5,5],
+                                
                             }))
                         }
                     }
@@ -53,13 +49,15 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
             
             
         });
-        
+        setTimeout(loadData, 300000);
+    }
+    function init() {
         
         // place the map center to be first vlog position
-        $scope.center = {     
-            lat: 39.71105,
-            lng: -91.35287,
-            zoom: 9,
+        $scope.center = {    
+            lat: 38.88464,
+            lng: -90.17648,
+            zoom: 6,
         };
         
         $scope.defaults = {
@@ -85,9 +83,9 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
                 }
             }
         };
-        setTimeout(init, 300000);
+        
     }
-
+    loadData();
     init();
     
     
