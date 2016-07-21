@@ -7,89 +7,98 @@ block main-content
         div(ng-view)
         
     footer.color.footer.section.section-info
-        .container
+      .container
+        .row
+          .col-sm-6
+            a(href='#')
+              img.img-responsive(src='images/Logos/Recycled Mississippi.png')
+          .col-sm-6
+            p.black-text.text-center.text-muted
+              | If you are interested in supporting our vision of using adventure to inspire
+              | and educate the next generation of social innovators, please contact us
+              | at support (at) kaitiaki (dot) org
+              br
+              br
+            a(name='sponsors')
             .row
-                .col-sm-6
-                    a(href='#')
-                        img.img-responsive(src='images/Logos/Recycled Mississippi.png')
-                .col-sm-6
-                    p.black-text.text-center.text-muted
-                        br
-                        br
-                    a(name='sponsors')
-                    .row
-                        .col-md-12.text-center
-                            a(href='https://youtu.be/ijON8pq8JJk?list=PLHIlRZafNMXDm7lja7r2LiyaseVNZ3aaS', target='_blank')
-                                i.fa.fa-3x.fa-fw.fa-youtube-play
-                            a(href='https://www.facebook.com/recycledmississippi/', target='_blank')
-                                i.fa.fa-3x.fa-facebook.fa-fw
-                            a(href='https://www.instagram.com/recycledmississippi/', target='_blank')
-                                i.fa.fa-3x.fa-fw.fa-instagram
-                            a(href='mailto:support@kaitiaki.org')
-                                i.fa.fa-3x.fa-fw.fa-envelope-o
-            .row
+              .col-md-12.text-center
+                a(href='https://youtu.be/ijON8pq8JJk?list=PLHIlRZafNMXDm7lja7r2LiyaseVNZ3aaS', target='_blank')
+                  i.fa.fa-3x.fa-fw.fa-youtube-play
+                a(href='https://www.facebook.com/recycledmississippi/', target='_blank')
+                  i.fa.fa-3x.fa-facebook.fa-fw
+                a(href='https://www.instagram.com/recycledmississippi/', target='_blank')
+                  i.fa.fa-3x.fa-fw.fa-instagram
+                a(href='mailto:support@kaitiaki.org')
+                  i.fa.fa-3x.fa-fw.fa-envelope-o
+        .row
+          .col-md-12
+            hr
+          .section
+            .container
+              .row
                 .col-md-12
-                    hr
-                .section
-                    .container
-                        .row
-                            .col-md-12
-                                h1.text-center.text-primary.heading OUR AMAZING SPONSORS
-                        .row
-                            .col-md-12
-                                p.text-center.text-primary
-                        .row
-                            .col-md-7
-                                h2.text-center.text-primary.heading(contenteditable='true') PRESENTING SPONSOR
-                                a(href='#')
-                                    img.center-block.img-responsive(src='images/Logos/Presenting Sponsor/The Revery Logo.jpg')
-                            .col-md-5
-                                h2.text-center.text-primary.heading(contenteditable='true') MAJOR SPONSORS
-                                a(href='#')
-                                    img.img-responsive(src='images/Logos/Major Sponsors/Screenshot 2016-06-28 17.56.49.jpg')
-                                a(href='#')
-                                    img.center-block.img-responsive(src='images/Logos/Major Sponsors/nyfa-logo-for-sail.jpg')
-            .row
+                  h1.text-center.text-primary.heading OUR AMAZING SPONSORS
+              .row
                 .col-md-12
-                    hr
-                    h2.text-center.text-primary.heading(contenteditable='true') SUPPORTING SPONSORS
-            .row.text-center
-                .col-md-3.text-center
-                    a(href='#')
-                        img.img-responsive(src='images/Logos/Supporting Sponsors/image1.PNG')
+                  p.text-center.text-primary
+                    | This project would have not been possible without the generous support
+                    | of all our supporters and sponsors who have helped us make this project
+                    | a reality.
+              .row
+                .col-md-7
+                  h2.text-center.text-primary.heading PRESENTING SPONSOR
+                  a(href='#')
+                    img.center-block.img-responsive(src='images/Logos/Presenting Sponsor/The Revery Logo.png')
                 .col-md-5
-                    a(href='http://hubbub.nz', target='_blank')
-                        img.img-responsive(src='images/Logos/Supporting Sponsors/Hubbub_New-Logo_06_2016.png')
-                .col-md-4
-                    a(href='#')
-                        img.img-responsive(src='images/Logos/Supporting Sponsors/suzuki_marine3362x1286.jpg')
-            .row
-                .col-md-12
-                    hr
-                    h2.text-center.text-primary.heading IN-KIND SPONSORS
-                    .col-md-3
-                        a(href='#')
-                            img.center-block.img-responsive(src='images/Logos/In-Kind Sponsors/KOKATAT-WAVE-BLACK.jpg')
-                    .col-md-3
-                        a(href='#')
-                            img.center-block.img-responsive(src='images/Logos/In-Kind Sponsors/41aw3tfzufvtlcou3521.jpeg')
-                    .col-md-3
-                        a(href='#')
-                            img.center-block.img-responsive(src='images/Logos/In-Kind Sponsors/1010554506.jpg')
-                    .col-md-3
-                        a(href='#')
-                            img.center-block.img-responsive(src='images/Logos/In-Kind Sponsors/avasol-logo-color-320x320.png')
-            .row
-                .col-md-12
-                    .col-md-4
-                        a(href='#')
-                            img.center-block.img-responsive(src='images/Logos/In-Kind Sponsors/BOULTER-PLYWOOD.jpg')
-                    .col-md-3
-                        a(href='#')
-                            img.center-block.img-responsive(src='images/Logos/In-Kind Sponsors/Benchmade_Butterfly_Logo.jpg')
-                    .col-md-4
-                        a(href='#')
-                            img.img-responsive(src='images/Logos/In-Kind Sponsors/Insect_shield_logo.jpg')
-                        a(href='#')
-                            img.img-responsive(src='images/Logos/In-Kind Sponsors/west_system_logo.png')
-
+                  h2.text-center.text-primary.heading MAJOR SPONSORS
+                  a(href='#')
+                    img.img-responsive(src='images/Logos/Major Sponsors/Screenshot 2016-06-28 17.56.49.jpg')
+                  a(href='#')
+                    img.center-block.img-responsive(src='images/Logos/Major Sponsors/nyfa-logo-for-sail.jpg')
+        .row
+          .col-md-12
+            hr
+            h2.text-center.text-primary.heading SUPPORTING SPONSORS
+        .row.text-center
+          .col-md-3.text-center
+            a(href='#')
+              img.img-responsive(src='images/Logos/Supporting Sponsors/image1.PNG')
+          .col-md-5
+            a(href='http://hubbub.nz', target='_blank')
+              img.img-responsive(src='images/Logos/Supporting Sponsors/Hubbub_New-Logo_06_2016.png')
+          .col-md-4
+            a(href='#')
+              img.img-responsive(src='images/Logos/Supporting Sponsors/suzuki_marine3362x1286.png')
+        .row
+          .col-md-12
+            hr
+            h2.text-center.text-primary.heading IN-KIND SPONSORS
+            .col-md-2
+              a(href='#')
+                img.center-block.img-responsive(src='images/Logos/In-Kind Sponsors/KOKATAT-WAVE-BLACK.png')
+            .col-md-2
+              a(href='#')
+                img.center-block.img-responsive(src='images/Logos/In-Kind Sponsors/41aw3tfzufvtlcou3521.png')
+            .col-md-2
+              a(href='#')
+                img.center-block.img-responsive(src='images/Logos/In-Kind Sponsors/1010554506.png')
+            .col-md-2
+              a(href='#')
+                img.center-block.img-responsive(src='images/Logos/In-Kind Sponsors/avasol-logo-color-320x320.png')
+            .col-md-2
+              a(href='#')
+                img.center-block.img-responsive(src='images/Logos/In-Kind Sponsors/Benchmade_Butterfly_Logo.png')
+            .col-md-2
+              a(href='#')
+                img.center-block.img-responsive(src='images/Logos/In-Kind Sponsors/BOULTER-PLYWOOD.png')
+        .row
+          .col-md-12
+            .col-md-3
+            .col-md-3
+              a(href='#')
+                img.img-responsive(src='images/Logos/In-Kind Sponsors/west_system_logo.png')
+            .col-md-3
+              a(href='#')
+                img.img-responsive(src='images/Logos/In-Kind Sponsors/Insect_shield_logo.png')
+            .col-md-3
+            .col-md-3
