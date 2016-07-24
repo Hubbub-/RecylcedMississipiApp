@@ -53,11 +53,11 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
     }
     function init() {
         
-        // place the map center to be first vlog position
+        // place the map center to be latest tracking point
         $scope.center = {    
-            lat: 38.88464,
-            lng: -90.17648,
-            zoom: 6,
+            lat: 35.15021,
+            lng: -90.05658,        
+            zoom: 10,
         };
         
         $scope.defaults = {
