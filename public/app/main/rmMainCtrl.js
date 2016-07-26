@@ -55,8 +55,8 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
         
         // place the map center to be latest tracking point
         $scope.center = {    
-            lat: 35.15021,
-            lng: -90.05658,        
+            lat: 34.86045,
+            lng: -90.33687,        
             zoom: 10,
         };
         
