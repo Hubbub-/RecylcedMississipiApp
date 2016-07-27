@@ -1,9 +1,10 @@
 angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData', function($scope, $http, leafletData) {
-
+    var latinit;
+    var longinit;
+    initialised = false;
     function loadData() {
         $http.get("/geo.geojson").success(function(data, status) {
-            // latinit = data.features[i].geometry.coordinates[1];
-            // longinit = data.features[i].geometry.coordinates[0];
+            
             
             angular.extend($scope, {
                 geojson: {
@@ -14,6 +15,15 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
                             layer.bindPopup(feature.properties.name);
                         }
                         if(feature.properties.current === "true"){
+                            latinit=parseFloat(feature.geometry.coordinates[1]);
+                            longinit=parseFloat(feature.geometry.coordinates[0]);
+                            console.log("lat:" + latinit);
+                            centerMap();
+                            // center = {    
+                            //     lat: latinit,
+                            //     lng: longinit,        
+                            //     zoom: 10,
+                            // };
                             layer.setIcon(L.icon({
                                 iconUrl: 'images/map/sailboat.png',
                                 iconSize: [200],
@@ -45,6 +55,8 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
                     }
                 }
                 
+                
+                
             })
             
             
@@ -52,20 +64,15 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
         setTimeout(loadData, 300000);
     }
     function init() {
-        
-        // place the map center to be latest tracking point
-        $scope.center = {    
-            lat: 34.86045,
-            lng: -90.33687,        
+        $scope.center = { 
+            lat: 37.06045,
+            lng: 89.3848,        
             zoom: 10,
         };
         
         $scope.defaults = {
             scrollWheelZoom: false
         }
-        
-
-        
         
 
         
@@ -86,8 +93,17 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
         
     }
     loadData();
+    
     init();
     
+    function centerMap() {
+        // place the map center to be latest tracking point
+        $scope.center = {    
+            lat: latinit,
+            lng: longinit,        
+            zoom: 10,
+        };
+    }
     
     $scope.centerJSON = function() {
         leafletData.getMap().then(function(map) {
@@ -104,6 +120,8 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
         //   "-90.76255",
         //   "42.64936"
             map.fitBounds([[46.1,-90.76], [29.6,-88]]);
+            
         });
+        
     };
 }]);
