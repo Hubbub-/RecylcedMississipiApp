@@ -18,12 +18,11 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
                             latinit=parseFloat(feature.geometry.coordinates[1]);
                             longinit=parseFloat(feature.geometry.coordinates[0]);
                             console.log("lat:" + latinit);
-                            centerMap();
-                            // center = {    
-                            //     lat: latinit,
-                            //     lng: longinit,        
-                            //     zoom: 10,
-                            // };
+                            if(!initialised){
+                                centerMap();
+                                initialised = true;
+                            }
+                            
                             layer.setIcon(L.icon({
                                 iconUrl: 'images/map/sailboat.png',
                                 iconSize: [200],
