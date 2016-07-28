@@ -12,14 +12,17 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
                     
                     onEachFeature: function (feature, layer) {
                         if(feature.properties.name != ''){
-                            layer.bindPopup(feature.properties.name);
+                            var description = feature.properties.name;
+                            layer.bindPopup(description, {
+                                minWidth : 570
+                            });
                         }
                         if(feature.properties.current === "true"){
                             latinit=parseFloat(feature.geometry.coordinates[1]);
                             longinit=parseFloat(feature.geometry.coordinates[0]);
                             console.log("lat:" + latinit);
                             if(!initialised){
-                                centerMap();
+                                $scope.centerMap();
                                 initialised = true;
                             }
                             
@@ -95,7 +98,7 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
     
     init();
     
-    function centerMap() {
+    $scope.centerMap = function() {
         // place the map center to be latest tracking point
         $scope.center = {    
             lat: latinit,
@@ -123,4 +126,12 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
         });
         
     };
+    
+    $scope.controls = {
+        // custom: new L.Control.Fullscreen()
+        fullscreen : {
+            position: 'topleft'
+        },
+        // custom: new 
+    }
 }]);
