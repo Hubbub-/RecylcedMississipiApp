@@ -1,16 +1,27 @@
 angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData', function($scope, $http, leafletData) {
     var latinit;
     var longinit;
+    var pathLatLong = [];
+    
     initialised = false;
+    
+    loadData();
+    
+    init();
+    
     function loadData() {
         $http.get("/geo.geojson").success(function(data, status) {
-            
+            pathLatLong = [];
             
             angular.extend($scope, {
+                
                 geojson: {
                     data: data,
                     
                     onEachFeature: function (feature, layer) {
+                        var pointString = {lat: parseFloat(feature.geometry.coordinates[1]), lng: parseFloat(feature.geometry.coordinates[0])};
+                        pathLatLong.push(pointString);
+                        
                         if(feature.properties.name != ''){
                             var description = feature.properties.name;
                             layer.bindPopup(description, {
@@ -20,7 +31,6 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
                         if(feature.properties.current === "true"){
                             latinit=parseFloat(feature.geometry.coordinates[1]);
                             longinit=parseFloat(feature.geometry.coordinates[0]);
-                            console.log("lat:" + latinit);
                             if(!initialised){
                                 $scope.centerMap();
                                 initialised = true;
@@ -38,9 +48,9 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
                         }
                         else if(feature.properties.name != ''){
                             layer.setIcon(L.icon({
-                                iconUrl: 'images/map/sailboatMediumRed.png',
-                                iconSize: [100],
-                                iconAnchor:[40,56],
+                                iconUrl: 'images/map/video-player.png',
+                                iconSize: [32],
+                                iconAnchor:[16,30],
                                 shadowUrl: 'images/map/sailboat_shadowMedium.png',
                                 shadowSize: [100],
                                 shadowAnchor: [40,56],
@@ -49,33 +59,29 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
                         else{
                             layer.setIcon(L.icon({
                                 iconUrl: 'images/map/dotSmall.png',
-                                iconSize: [10],
+                                iconSize: [0],
                                 iconAnchor:[5,5],
-                                
                             }))
                         }
                     }
+                    
                 }
-                
-                
-                
             })
-            
+            setTimeout($scope.addShape, 1000);
             
         });
-        setTimeout(loadData, 300000);
+        setTimeout(loadData, 200000);
     }
     function init() {
         $scope.center = { 
-            lat: 37.06045,
-            lng: 89.3848,        
-            zoom: 10,
+            lat: 37.3116,
+            lng: -89.4068,        
+            zoom: 5,
         };
         
         $scope.defaults = {
             scrollWheelZoom: false
-        }
-        
+        };
 
         
         //define mapbox as the map
@@ -94,9 +100,7 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
         };
         
     }
-    loadData();
-    
-    init();
+
     
     $scope.centerMap = function() {
         // place the map center to be latest tracking point
@@ -105,33 +109,31 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
             lng: longinit,        
             zoom: 10,
         };
-    }
+    };
     
     $scope.centerJSON = function() {
         leafletData.getMap().then(function(map) {
-            // var latlngs = [];
-            // for (var i in $scope.geojson.data.features) {
-            //     var coord = $scope.geojson.data.features[i].geometry.coordinates[0];
-            //     for (var j in coord) {
-            //         var points = coord[j];
-            //         for (var k in points) {
-            //             latlngs.push(L.GeoJSON.coordsToLatLng(points[k]));
-            //         }
-            //     }
-            // }
-        //   "-90.76255",
-        //   "42.64936"
             map.fitBounds([[46.1,-90.76], [29.6,-88]]);
-            
         });
-        
     };
     
     $scope.controls = {
         // custom: new L.Control.Fullscreen()
         fullscreen : {
             position: 'topleft'
-        },
-        // custom: new 
+        }
+    };
+    
+    $scope.addShape = function () {
+        
+        var shape = new L.polyline(pathLatLong, {
+            color:'blue',
+            weight: 5,
+            opacity: 0.4,
+            smoothFactor: 3
+        });
+        leafletData.getMap().then(function(map) {
+            shape.addTo(map);
+        });
     }
 }]);
