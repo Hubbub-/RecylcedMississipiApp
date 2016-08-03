@@ -51,12 +51,12 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
                         }
                         else if(feature.properties.name != ''){
                             layer.setIcon(L.icon({
-                                iconUrl: 'images/map/video-player.png',
-                                iconSize: [32],
-                                iconAnchor:[16,30],
-                                shadowUrl: 'images/map/sailboat_shadowMedium.png',
-                                shadowSize: [100],
-                                shadowAnchor: [40,56],
+                                iconUrl: 'images/map/video-icon.png',
+                                iconSize: [50],
+                                iconAnchor:[25,47],
+                                shadowUrl: 'images/map/video-icon-shadow.png',
+                                shadowSize: [50],
+                                shadowAnchor: [25,47],
                             }))
                         }
                         else{
