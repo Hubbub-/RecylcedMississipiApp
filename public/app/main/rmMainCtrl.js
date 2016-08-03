@@ -2,6 +2,8 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
     var latinit;
     var longinit;
     var pathLatLong = [];
+    var shape;
+
     
     initialised = false;
     
@@ -11,7 +13,7 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
     
     function loadData() {
         $http.get("/geo.geojson").success(function(data, status) {
-            pathLatLong = [];
+            // pathLatLong = [];
             
             angular.extend($scope, {
                 
@@ -20,6 +22,7 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
                     
                     onEachFeature: function (feature, layer) {
                         var pointString = {lat: parseFloat(feature.geometry.coordinates[1]), lng: parseFloat(feature.geometry.coordinates[0])};
+                        
                         pathLatLong.push(pointString);
                         
                         if(feature.properties.name != ''){
@@ -126,14 +129,18 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
     
     $scope.addShape = function () {
         
-        var shape = new L.polyline(pathLatLong, {
+        shape = L.polyline(pathLatLong, {
             color:'blue',
             weight: 5,
             opacity: 0.4,
             smoothFactor: 3
         });
         leafletData.getMap().then(function(map) {
-            shape.addTo(map);
-        });
+            // map.addLayer(shape);
+            shape.addTo(map)
+            console.log(shape);
+            firstAdd = false;
+            // pathLatLong = [];
+        })
     }
 }]);
