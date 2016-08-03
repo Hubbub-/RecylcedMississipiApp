@@ -13,7 +13,7 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
     
     function loadData() {
         $http.get("/geo.geojson").success(function(data, status) {
-            // pathLatLong = [];
+            pathLatLong = [];
             
             angular.extend($scope, {
                 
