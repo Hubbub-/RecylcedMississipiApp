@@ -6,12 +6,28 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          "-91.48999",
+          "30.74412"
+        ]
+      },
+      "properties": {
+        "current": "true",
+        "time": "1470232433",
+        "name": "",
+        "localTime": "2016-08-03T13:53:53+0000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           "-91.50027",
           "30.744"
         ]
       },
       "properties": {
-        "current": "true",
+        "current": "false",
         "time": "1470232135",
         "name": "",
         "localTime": "2016-08-03T13:48:55+0000"
