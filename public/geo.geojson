@@ -6,12 +6,60 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          "-90.71332",
+          "30.02002"
+        ]
+      },
+      "properties": {
+        "current": "true",
+        "time": "1470575701",
+        "name": "",
+        "localTime": "2016-08-07T13:15:01+0000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "-90.7196",
+          "30.01676"
+        ]
+      },
+      "properties": {
+        "current": "false",
+        "time": "1470575402",
+        "name": "",
+        "localTime": "2016-08-07T13:10:02+0000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          "-90.72211",
+          "30.01689"
+        ]
+      },
+      "properties": {
+        "current": "false",
+        "time": "1470575100",
+        "name": "",
+        "localTime": "2016-08-07T13:05:00+0000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           "-90.72214",
           "30.01694"
         ]
       },
       "properties": {
-        "current": "true",
+        "current": "false",
         "time": "1470566719",
         "name": "",
         "localTime": "2016-08-07T10:45:19+0000"
