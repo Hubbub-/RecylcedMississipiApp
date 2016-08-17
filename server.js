@@ -13,7 +13,7 @@ require('./server/config/mongoose')(config);
 
 require('./server/config/routes')(app);
 
-require('./server/fetch/download')(app, config);
+//require('./server/fetch/download')(app, config);
 
 // require('./server/fetch/download2')(app, config);
 
