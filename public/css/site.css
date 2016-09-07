@@ -25,3 +25,42 @@ footer {
 footer p {
   border-top: 1px solid #d7e0e2;
 }
+@keyframes slidy {
+0% { left: 0%; }
+6.33% { left: 0%; }
+8.33% { left: -100%; }
+14.66% { left: -100%; }
+16.66% { left: -200%; }
+23% { left: -200%; }
+25% { left: -300%; }
+31.33% { left: -300%; }
+33.33% { left: -400%; }
+39.66% { left: -400%; }
+41.66% { left: -500%; }
+48% { left: -500%; }
+50% { left: -600%; }
+56.33% { left: -600%; }
+58.33% { left: -700%; }
+64.66% { left: -700%; }
+66.66% { left: -800%; }
+73% { left: -800%; }
+75% { left: -900%; }
+81.33% { left: -900%; }
+83.33% { left: -1000%; }
+89.66% { left: -1000%; }
+91.66% { left: -1100%; }
+98% { left: -1100%; }
+100% { left: -1200%; }
+}
+
+div#slider { overflow: hidden; }
+div#slider figure img { width: 8.3333%; float: left; }
+div#slider figure { 
+  position: relative;
+  width: 1200%;
+  margin: 0;
+  left: 0;
+  text-align: left;
+  font-size: 0;
+  animation: 66s slidy infinite; 
+}

@@ -35,17 +35,17 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
                             latinit=parseFloat(feature.geometry.coordinates[1]);
                             longinit=parseFloat(feature.geometry.coordinates[0]);
                             if(!initialised){
-                                $scope.centerMap();
+                                // $scope.centerMap();
                                 initialised = true;
                             }
                             
                             layer.setIcon(L.icon({
-                                iconUrl: 'images/map/sailboat.png',
+                                iconUrl: 'images/map/PlasticBottle.png',
                                 iconSize: [200],
-                                iconAnchor:[80,112],
-                                shadowUrl: 'images/map/sailboat_shadow.png',
+                                iconAnchor:[74,50],
+                                shadowUrl: 'images/map/PlasticBottleShadow.png',
                                 shadowSize: [200],
-                                shadowAnchor: [80,112],
+                                shadowAnchor: [74,50],
                             }))
                             
                         }
@@ -72,8 +72,9 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
             })
             setTimeout($scope.addShape, 1000);
             
+            
         });
-        setTimeout(loadData, 200000);
+        // setTimeout(loadData, 200000);
     }
     function init() {
         $scope.center = { 
@@ -115,9 +116,14 @@ angular.module('app').controller('rmMainCtrl', [ '$scope', '$http', 'leafletData
     };
     
     $scope.centerJSON = function() {
-        leafletData.getMap().then(function(map) {
-            map.fitBounds([[46.1,-90.76], [29.6,-88]]);
-        });
+        // leafletData.getMap().then(function(map) {
+        //     map.fitBounds([[46.1,-90.76], [29.6,-88]]);
+        // });
+        $scope.center = { 
+            lat: 37.3116,
+            lng: -89.4068,        
+            zoom: 5,
+        };
     };
     
     $scope.controls = {
